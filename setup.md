@@ -2,10 +2,10 @@ The following instructions guide through a minimal setup of Confluent on Kuberne
 
 # Create the Namespace (special labels for my cluster)
 ```
-kubectl create namespace confluent
-kubectl label ns confluent pod-security.kubernetes.io/enforce=privileged  
-kubectl label ns confluent pod-security.kubernetes.io/audit=privileged 
-kubectl label ns confluent pod-security.kubernetes.io/warn=privileged
+    kubectl create namespace confluent
+    kubectl label ns confluent pod-security.kubernetes.io/enforce=privileged  
+    kubectl label ns confluent pod-security.kubernetes.io/audit=privileged 
+    kubectl label ns confluent pod-security.kubernetes.io/warn=privileged
 ```
 
 
@@ -20,14 +20,28 @@ helm upgrade --install confluent-operator confluentinc/confluent-for-kubernetes 
 
 # Make sure the Operator pod is running: 
 ```bash
-kubectl get pods -n confluent
-kubectl get crds | grep confluent
-
+    kubectl get pods -n confluent
+    kubectl get crds | grep confluent
 ```
+
+
+# Build the image
+
+```bash
+    docker build -t ghcr.io/cloud-focus-tech/cfkc:0.0.1 .
+```
+
+# Push the image
+
+```bash
+    docker push ghcr.io/cloud-focus-tech/cfkc:0.0.1 
+```
+
 
 
 # Deploy a Connect Host
 ```bash
-kubectl deploy -f deploy.yaml
+    kubectl deploy -f deploy.yaml
 ```
+
 
